@@ -1,0 +1,1 @@
+console.log("Yamaha clone radi");

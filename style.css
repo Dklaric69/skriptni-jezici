@@ -1,41 +1,227 @@
-body{
-    margin:0;
-    padding:30px;
-    background-color:white;
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
 }
 
-.okvir{
-    max-width: 900px;
-    text-align: center;
-    margin:0 auto;
-}
-
-.velika-kartica{
+.navbar {
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: #111;
 }
 
-.kartica{
-    flex: 1;
-    padding: 20px;
-    background-color: rgb(21, 0, 255);
-    border-radius: 10px;
+.navbar a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
 }
 
-@media (max-width:760px){
-    .velika-kartica{
-        flex-direction: column;
-    }
-    body{
-        background-color: rgb(0, 217, 255);
-    }
+.hero {
+    height: 80vh;
+    background: #222;
+    position: relative;
 }
-@media (max-width:1100px){
-    .kartica{
-        background-color: rgb(255, 0, 0);
-    }
-}.kartica-slika{
+
+.overlay {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.naslovna {
+    position: relative; /* ostaje u normalnom tijeku dokumenta */
+    margin: 0 auto 24px; /* počinje od vrha stranice, razmak ispod kako ne bi prekrivala sljedeće elemente */
+    width: 90%;
+    max-width: 1100px;
+    min-height: 40vh; /* veća, responsivna visina da ne bude premala i da gura grid dolje */
     height: auto;
-    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden; /* sprječava iskačući sadržaj */
+    border-radius: 6px;
+    z-index: 0; /* osigurava da naslovna ne leži iznad link-slika */
+}
+
+.naslovna img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* popuni okvir bez iskrivljenja */
+    border-radius: 6px;
+}
+
+/* grid stavlja slike/linkove ispod naslovne */
+.grid {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 20px;
+    flex-wrap: wrap;
+    margin-top: 12px; /* dodatni razmak ispod naslovne */
+    clear: both; /* osigurava da stoji ispod eventualnih floated elemenata */
+}
+
+.grid-item {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    flex: 1 1 calc(33.333% - 16px);
+    max-width: calc(33.333% - 16px);
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    text-align: center;
+    z-index: 1;
+}
+
+.grid-item img {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.grid-item h2 {
+    margin: 10px 0 16px;
+    font-size: 1.1rem;
+}
+
+/* prilagodbe za manje ekrane */
+@media (max-width: 600px) {
+    .naslovna {
+        height: 120px;
+        max-height: 30vh;
+        margin-bottom: 12px;
+    }
+    .grid-item {
+        flex: 1 1 calc(50% - 16px);
+        max-width: calc(50% - 16px);
+    }
+}
+
+
+/* Smanjeni placeholder i responsivno skaliranje slika */
+.placeholder {
+    height: 120px;        /* manje visine */
+    max-height: 120px;
+    background: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;     /* sprječava iskakanje slike iz okvira */
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* Ako u placeholder ide <img>, ovo osigurava da se pravilno skalira */
+.placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover; /* popuni okvir bez iskrivljenja */
+    display: block;
+}
+
+/* Zamijeni placeholder ovim blokom.
+    Ukloni dodatni '}' koji se nalazi odmah nakon placeholdera u datoteci. */
+
+.products {
+     display: flex;
+     gap: 20px;
+     padding: 20px;
+     flex-wrap: wrap;
+     justify-content: flex-start;
+     align-items: stretch;
+}
+
+.product {
+     background: linear-gradient(180deg, #111 0%, #1b1b1b 100%);
+     color: #fff;
+     padding: 16px;
+     flex: 1 1 220px;
+     min-width: 220px;
+     max-width: 320px;
+     box-sizing: border-box;
+     border-radius: 8px;
+     display: flex;
+     flex-direction: column;
+     gap: 12px;
+     overflow: hidden;
+     border: 1px solid rgba(255,255,255,0.04);
+     transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.product img {
+     width: 100%;
+     height: 160px;
+     object-fit: cover;
+     border-radius: 6px;
+     display: block;
+}
+
+.product h3 {
+     margin: 0;
+     font-size: 1rem;
+     color: #fff;
+}
+
+.product p {
+     margin: 0;
+     color: #dcdcdc;
+     font-size: .95rem;
+     flex: 1 0 auto;
+}
+
+.product .price {
+     font-weight: 700;
+     color: #6ee7b7;
+}
+
+.product .cta {
+     display: inline-block;
+     margin-top: 8px;
+     padding: 8px 12px;
+     background: #0a84ff;
+     color: #fff;
+     border-radius: 6px;
+     text-decoration: none;
+}
+
+/* hover / fokus - blagi "podizanje" kartice */
+.product:hover,
+.product:focus-within {
+     transform: translateY(-6px);
+     box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+}
+
+/* responsivno: 2 stupca pa 1 stupac na malim ekranima */
+@media (max-width: 900px) {
+     .product { max-width: calc(50% - 12px); flex: 1 1 calc(50% - 12px); }
+}
+@media (max-width: 600px) {
+     .product { max-width: 100%; flex: 1 1 100%; min-width: 0; }
+}
+
+.page {
+    padding: 40px;
+}
+
+/* Manje ekrane dodatno prilagodi */
+@media (max-width: 600px) {
+    .placeholder {
+        height: 90px;
+        max-height: 90px;
+        padding: 6px;
+    }
+    .product {
+        padding: 12px;
+    }
+    .navbar {
+        padding: 12px 16px;
+    }
 }
